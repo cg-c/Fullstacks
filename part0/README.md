@@ -38,7 +38,7 @@ sequenceDiagram
 ## 0.5: Single page app diagram
 
 ```mermaid
-seqeunceDiagram
+sequenceDiagram
   participant browser
   participant server
   
@@ -66,7 +66,7 @@ seqeunceDiagram
 ## 0.6: New note in Single page app diagram
 
 ```mermaid
-seqeunceDiagram
+sequenceDiagram
   participant browser
   participant server
   
