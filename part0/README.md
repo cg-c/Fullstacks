@@ -74,6 +74,6 @@ sequenceDiagram
   activate server
   server-->>browser: 201 status code
   deactivate server
-  %% Stays on the same page, no HTTP requests
+  Note over browser, server: Stays on the same page, no HTTP requests
 ```
   
