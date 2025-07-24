@@ -6,18 +6,34 @@ const Header = (course) => {
   )
 }
 
-const Content = (parts) => {
-  let all = []
+const Part = (prop) => {
+  return (
+    <>
+      <p>{prop.part.name} {prop.part.num}</p>
+    </>
+  )
+}
 
-  for (const item of parts.parts) {
-    all.push(<p>{item.name} {item.num}</p>)
-  }
+const Content = (parts) => {
+  // let all = []
+
+  // for (const item of parts.parts) {
+  //   all.push(<p>{item.name} {item.num}</p>)
+  // }
+
+  // return (
+  //     <>
+  //       {all}
+  //     </>
+  //   )
 
   return (
-      <>
-        {all}
-      </>
-    )
+    <>
+      <Part part={parts.parts[0]} />
+      <Part part={parts.parts[1]} />
+      <Part part={parts.parts[2]} />
+    </>
+  )
 }
 
 const Total = (parts) => {
