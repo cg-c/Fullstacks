@@ -2,6 +2,7 @@ import { use } from 'react'
 import { useState } from 'react'
 
 const Button = ({ onClick, text }) => <button onClick={onClick}>{text}</button>
+const Header = ({ text }) => <h1>{text}</h1>
 
 const App = () => {
   const anecdotes = [
@@ -17,6 +18,7 @@ const App = () => {
    
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
+  const [mIndex, setMIndex] = useState(0)
 
   const handleAnecdote = () => {
     let num = Math.floor(Math.random() * anecdotes.length)
@@ -26,8 +28,15 @@ const App = () => {
   const handleVote = () => {
     const copy = { ...votes }
     copy[selected] += 1
+    console.log(copy[selected])
+
+    if (copy[selected] > copy[mIndex]) setMIndex(selected)
+
     setVotes(copy)
-    console.log(votes[selected])
+  }
+
+  const findMax = () => {
+    return votes.indexOf(Math.max( ...votes ))
   }
 
 
@@ -38,6 +47,9 @@ const App = () => {
         <Button onClick={handleVote} text="vote" />
         <Button onClick={handleAnecdote} text="next anecdote" />
       </div>
+      <Header text="Anecdote with most votes" />
+      {anecdotes[mIndex]}
+      <p>has {votes[mIndex]} votes</p>
     </div>
   )
 }
