@@ -1,5 +1,5 @@
 const Header = ({name}) => <h2>{name}</h2>
-
+const Title = ({text}) => <h1>{text}</h1>
 const Part = ({name, exercises}) => <p>{name} {exercises}</p>
 
 
@@ -17,7 +17,7 @@ const Course = ({ courses }) => {
 
     return (
         <>
-            <h1>Web development curriculum </h1>
+            <Title text="Web development curriculum" />
             {courses.map(course => 
                 <div key={course.id}>
                     <Header name={course.name}/>
