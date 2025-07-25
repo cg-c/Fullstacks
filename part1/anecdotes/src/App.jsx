@@ -28,17 +28,9 @@ const App = () => {
   const handleVote = () => {
     const copy = { ...votes }
     copy[selected] += 1
-    console.log(copy[selected])
-
     if (copy[selected] > copy[mIndex]) setMIndex(selected)
-
     setVotes(copy)
   }
-
-  const findMax = () => {
-    return votes.indexOf(Math.max( ...votes ))
-  }
-
 
   return (
     <div>
