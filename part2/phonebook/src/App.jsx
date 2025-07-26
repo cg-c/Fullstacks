@@ -42,9 +42,9 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
       <Filter value={filter} onChange={(event) => setFilter(event.target.value)} />
-      <h2>add a new</h2>
+      <h3>Add a new</h3>
       <PersonForm newName={newName} newNumber={newNumber} addPerson={addPerson} onNameChange={handleNameChange} onNumberChange={(event) => setNewNumber(event.target.value)} />
-      <h2>Numbers</h2>
+      <h3>Numbers</h3>
       <Persons filter={filter} persons={persons} />
     </div>
   )
