@@ -9,7 +9,7 @@ const Persons = ({filter, persons}) => {
     return (
         <>
             {display.map(ppl =>
-                <p key={ppl.name}>{ppl.name} {ppl.number}</p>
+                <p key={ppl.id}>{ppl.name} {ppl.number}</p>
             )}
         </>
     )
