@@ -1,4 +1,4 @@
-const Persons = ({filter, persons}) => {
+const Persons = ({filter, persons, onClick}) => {
     let display
 
     if (filter.length > 0) {
@@ -9,7 +9,7 @@ const Persons = ({filter, persons}) => {
     return (
         <>
             {display.map(ppl =>
-                <p key={ppl.id}>{ppl.name} {ppl.number}</p>
+                <p key={ppl.id}>{ppl.name} {ppl.number} <button onClick={() => onClick(ppl.id)}>delete</button></p>
             )}
         </>
     )
