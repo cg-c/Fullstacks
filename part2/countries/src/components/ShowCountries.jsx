@@ -1,4 +1,6 @@
-const ShowCountries = ({validCountries}) => {
+import Views from "./Views"
+
+const ShowCountries = ({validCountries, showView}) => {
 
     if (validCountries.length > 10) {
         return (
@@ -7,25 +9,16 @@ const ShowCountries = ({validCountries}) => {
     }
     else if (validCountries.length == 1) {
         return (
-            <div>
-                <h1>{validCountries[0].name.common}</h1>
-                <p>Capital {validCountries[0].capital[0]}</p>
-                <p>Area {validCountries[0].area}</p>
-                <h2>Languages</h2> 
-                <ul>
-                    {Object.values(validCountries[0].languages).map(element => {
-                        return <li key={element}>{element}</li>
-                    })} 
-                </ul>
-                <img src={validCountries[0].flags.png} />
-            </div>
+            <>
+                <Views country={validCountries[0]} />
+            </>
         )
     }
     else {
         return (
             <div>
                 {validCountries.map(c =>
-                    <p key={c.name.common}>{c.name.common}</p>
+                    <p key={c.name.common}>{c.name.common} <button onClick={() => showView(c)}>Show</button></p>
                 )}
             </div>
         )

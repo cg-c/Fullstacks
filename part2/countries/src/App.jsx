@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import countryServices from './services/countries'
 import ShowCountries from './components/ShowCountries.jsx'
+import Views from './components/Views.jsx'
 import { use } from 'react'
 import { useEffect } from 'react'
 
@@ -17,6 +18,10 @@ function App() {
     })
   }, [countryName])
 
+  const showView = (country) => {
+    setValidCountries([].concat(country))
+  }
+
   const handleChangeName = (event) => {
     setCountryName(event.target.value)
   }
@@ -31,7 +36,7 @@ function App() {
           />
         </div>
       </form>
-      <ShowCountries validCountries={validCountries} />
+      <ShowCountries validCountries={validCountries} showView={showView} />
     </div>
   )
 }
