@@ -5,7 +5,6 @@ import Views from './components/Views.jsx'
 import { use } from 'react'
 import { useEffect } from 'react'
 
-
 function App() {
   const [validCountries, setValidCountries] = useState([])
   const [countryName, setCountryName] = useState("")
