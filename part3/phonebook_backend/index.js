@@ -26,7 +26,15 @@ let persons = [
 ]
 
 app.use(express.json())
-app.use(morgan('tiny'))
+
+morgan.token('data', (request, response) => {
+    if (request.body) {
+        return JSON.stringify(request.body)
+    }
+})
+
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :data'))
 
 app.get('/', (request, response) => {
     response.send('<h1>Persons</h1>')
