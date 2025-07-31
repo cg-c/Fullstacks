@@ -82,6 +82,11 @@ app.post('/api/persons', (request, response) => {
             error: 'number missing'
         })
     }
+    else if (persons.find(p => p.name === body.name)) {
+        return response.status(400).json({
+            error: 'name must be unique'
+        })
+    }
 
     const person = {
         id: generateId(),
@@ -89,9 +94,7 @@ app.post('/api/persons', (request, response) => {
         number: body.number
     }
 
-    console.log(person.id)
-
-    persons.concat(person)
+    persons = persons.concat(person)
     response.json(persons)
 })
 
