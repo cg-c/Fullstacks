@@ -74,8 +74,6 @@ const App = () => {
             setMessageType(null)
             setMessage(null)
           }, 5000)          
-          setNewName("")
-          setNewNumber("")
         })
         .catch(error => {
           setMessageType(false)
@@ -90,6 +88,8 @@ const App = () => {
           setPersons(persons.filter(p => p.id !== found.id))
         })
     }
+    setNewName("")
+    setNewNumber("")
   }
 
   const deletePerson = (id) => {
@@ -114,6 +114,8 @@ const App = () => {
           setPersons(persons.filter(p => p.id !== found.id))
       })
     }
+    setNewName("")
+    setNewNumber("")
   }
 
   const handleNameChange = (event) => {
