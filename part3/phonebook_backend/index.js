@@ -63,7 +63,7 @@ app.get('/info', (request, response) => {
     )
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
     Person.findByIdAndDelete(request.params.id)
         .then(result => {
             response.status(204).end()
@@ -80,7 +80,7 @@ app.delete('/api/persons/:id', (request, response) => {
 //   return String(randID)
 // }
 
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
     const body = request.body
     if (!body.name) {
         return response.status(400).send({
@@ -100,10 +100,7 @@ app.post('/api/persons', (request, response) => {
             })
         }
     })
-    .catch(error => {
-        console.log("Unable to log person")
-        response.status(500).end()
-    })
+    .catch(error => next(error))
 
     const person = new Person({
         // id: generateId(),
@@ -114,6 +111,27 @@ app.post('/api/persons', (request, response) => {
     person.save().then(savedPerson => {
         response.json(savedPerson)
     })
+})
+
+app.put('/api/persons/:id', (request, response, next) => {
+    console.log(request.body, "im here")
+    const { name, number } = request.body
+    console.log(`The name of the person is ${name} and the id is`, request.params.id)
+    Person.findById(request.params.id)
+        .then(person => {
+            if (!person) {
+                return response.status(404).end()
+            }
+            console.log("hello")
+
+            person.name = name
+            person.number = number
+
+            return person.save().then((updatedPerson) => {
+                response.json(updatedPerson)
+            })
+        })
+        .catch(error => next(error))
 })
 
 const unknownEndpoint = (request, response) => {
