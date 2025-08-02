@@ -49,18 +49,28 @@ app.get('/api/persons', (request, response) => {
     })
 })
 
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
     Person.findById(request.params.id).then(p => {
+        if (!p) {
+            response.status(404).end()
+        }
         response.json(p)
     })
+    .catch(error => next(error))
 })
 
-app.get('/info', (request, response) => {
-    response.send(
-        `<p>Phonebook has info for ${persons.length} people </p>
-        <p>${new Date()}</p>
-        `
-    )
+
+app.get('/info', (request, response, next) => {
+    Person.countDocuments()
+    .then(count => {
+        response.send(
+            `<p>Phonebook has info for ${count} people </p>
+            <p>${new Date()}</p>
+            `
+        )
+    })
+    .catch(error => next(error))
+    
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
@@ -114,9 +124,7 @@ app.post('/api/persons', (request, response, next) => {
 })
 
 app.put('/api/persons/:id', (request, response, next) => {
-    console.log(request.body, "im here")
     const { name, number } = request.body
-    console.log(`The name of the person is ${name} and the id is`, request.params.id)
     Person.findById(request.params.id)
         .then(person => {
             if (!person) {
