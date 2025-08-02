@@ -83,15 +83,27 @@ app.delete('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response) => {
     const body = request.body
     if (!body.name) {
-        return response.status(400).json({
+        return response.status(400).send({
             error: 'name missing'
         })
     }
     else if (!body.number) {
-        return response.status(400).json({
+        return response.status(400).send({
             error: 'number missing'
         })
     }
+
+    Person.find({}).then(ppl => {
+        if (ppl.find(p => p.number === body.number)) {
+            return response.status(400).send({
+                error: 'duplicate number'
+            })
+        }
+    })
+    .catch(error => {
+        console.log("Unable to log person")
+        response.status(500).end()
+    })
 
     const person = new Person({
         // id: generateId(),
