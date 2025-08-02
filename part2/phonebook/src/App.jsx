@@ -46,7 +46,7 @@ const App = () => {
           .catch(error => {
             setMessageType(false)
             setMessage(
-              `Information on ${newName} has already been removed from the server`
+              `${Object.values(error.response.data)}`
             )
             setTimeout(() => {
               setMessageType(null)
@@ -79,8 +79,9 @@ const App = () => {
         })
         .catch(error => {
           setMessageType(false)
+          console.log(Object.values(error.response))
           setMessage(
-            `Information on ${newName} has already been removed from the server`
+            `${Object.values(error.response.data)}`
           )
           setTimeout(() => {
             setMessageType(null)
