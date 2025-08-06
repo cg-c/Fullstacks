@@ -48,7 +48,7 @@ const initalBlogs = [
 const nonExistingId = async () => {
     const blog = new Blog({
         title: 'remove',
-        author: 'remove'
+        url: 'remove.net'
     })
     await blog.save()
     await blog.deleteOne()

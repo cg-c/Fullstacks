@@ -81,6 +81,39 @@ test('default likes is zero', async () => {
 })
 
 
+test('blogs without titles cannot be added', async () => {
+    const newBlog = {
+        author: 'Miss title',
+        url: 'title.com',
+        likes: 75
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    assert.strictEqual(blogsAtEnd.length, helper.initalBlogs.length)
+})
+
+
+test('blogs without url not added', async () => {
+    const newBlog = {
+        title: 'url',
+        author: 'Ms.url',
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(400)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    assert.strictEqual(blogsAtEnd.length, helper.initalBlogs.length)
+})
+
+
 after(async () => {
   await mongoose.connection.close()
 })
