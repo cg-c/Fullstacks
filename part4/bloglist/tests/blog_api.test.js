@@ -28,6 +28,16 @@ test('all blogs returned', async () => {
 })
 
 
+test('unique idenitfier of blogs is id', async () => {
+    const response = await api.get('/api/blogs')
+    response.body.forEach(b => {
+        if (!b.hasOwnProperty('id')) {
+            throw new error("no id")
+        }
+    })
+})
+
+
 after(async () => {
   await mongoose.connection.close()
 })
