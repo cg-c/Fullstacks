@@ -5,6 +5,7 @@ const supertest = require('supertest')
 const app = require('../app')
 const helper = require('./test_helper')
 const Blog = require('../models/blog')
+const blog = require('../models/blog')
 
 const api = supertest(app)
 
@@ -36,6 +37,30 @@ test('unique idenitfier of blogs is id', async () => {
         }
     })
 })
+
+
+test('a blog can be added', async () => {
+    const newBlog = {
+        title: 'test',
+        author: 'Mrs.test',
+        url: 'test.com',
+        likes: 347
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    assert.strictEqual(blogsAtEnd.length, helper.initalBlogs.length + 1)
+    
+    const title = blogsAtEnd.map(b => b.title)
+    const author = blogsAtEnd.map(b => b.author)
+    assert(title.includes('test'))
+    assert(author.includes('Mrs.test'))
+} )
 
 
 after(async () => {
