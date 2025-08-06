@@ -128,6 +128,25 @@ test('deletion of a blog', async () => {
     assert.strictEqual(blogsAtEnd.length, helper.initalBlogs.length - 1)
 })
 
+test('update likes for a blog post', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+    
+    likesUpdate = {
+        ...blogToUpdate,
+        likes: 8438
+    }
+
+    const updatedBlog = await api
+        .put(`/api/blogs/${blogToUpdate.id}`)
+        .send(likesUpdate)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
+
+    assert.strictEqual(blogsAtStart.length, helper.initalBlogs.length)
+    assert.deepStrictEqual(updatedBlog.body, likesUpdate)
+})
+
 
 after(async () => {
   await mongoose.connection.close()
