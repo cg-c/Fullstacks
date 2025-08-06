@@ -47,7 +47,7 @@ test('a blog can be added', async () => {
         likes: 347
     }
 
-    await api
+    const resultBlog = await api
         .post('/api/blogs')
         .send(newBlog)
         .expect(201)
@@ -55,12 +55,30 @@ test('a blog can be added', async () => {
 
     const blogsAtEnd = await helper.blogsInDb()
     assert.strictEqual(blogsAtEnd.length, helper.initalBlogs.length + 1)
-    
-    const title = blogsAtEnd.map(b => b.title)
-    const author = blogsAtEnd.map(b => b.author)
-    assert(title.includes('test'))
-    assert(author.includes('Mrs.test'))
-} )
+    assert.strictEqual(resultBlog.body.title, newBlog.title)
+    assert.strictEqual(resultBlog.body.author, newBlog.author)
+    assert.strictEqual(resultBlog.body.likes, newBlog.likes)
+    assert.strictEqual(resultBlog.body.url, newBlog.url)
+})
+
+
+test('default likes is zero', async () => {
+    const newBlog = {
+        title: 'likes',
+        author: 'Mr.like',
+        url: 'like.com',
+    }
+
+    const resultBlog = await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    assert.strictEqual(blogsAtEnd.length, helper.initalBlogs.length + 1)
+    assert.strictEqual(resultBlog.body.likes, 0)
+})
 
 
 after(async () => {
