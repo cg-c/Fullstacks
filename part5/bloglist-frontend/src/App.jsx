@@ -14,10 +14,9 @@ const App = () => {
   const [notif, setNotif] = useState({ message: null })
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+    blogService.getAll().then(blogs => 
+      sortBlogsByLikes(blogs)
     )
-    // sortBlogsByLikes()  
   }, [])
 
   useEffect(() => {
@@ -84,8 +83,7 @@ const App = () => {
     
     try {
       const returnedBlog = await blogService.update(id, changedBlog)
-      setBlogs(blogs.map(blog => (blog.id === id ? returnedBlog : blog)))
-      // sortBlogsByLikes()
+      setBlogs(blogs.map(blog => (blog.id === id ? returnedBlog : blog)).sort((a, b) => b.likes - a.likes))
     }
     catch{error => {
       setBlogs(blogs.filter(b => b.id !== id))
@@ -116,8 +114,8 @@ const App = () => {
     </form>
   )
 
-  const sortBlogsByLikes = () => {
-    const sortedBlogs = [...blogs].sort((a, b) => a.likes - b.likes)
+  const sortBlogsByLikes = (unsortBlogs) => {
+    const sortedBlogs = [...unsortBlogs].sort((a, b) => b.likes - a.likes)
     setBlogs(sortedBlogs)
   }
  
