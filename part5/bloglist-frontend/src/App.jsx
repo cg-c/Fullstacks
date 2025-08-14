@@ -8,20 +8,20 @@ import CreateBlogForm from './components/CreateBlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('') 
-  const [password, setPassword] = useState('') 
-  const [user, setUser] = useState(null) 
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [user, setUser] = useState(null)
   const [notif, setNotif] = useState({ message: null })
 
   useEffect(() => {
-    blogService.getAll().then(blogs => 
+    blogService.getAll().then(blogs =>
       sortBlogsByLikes(blogs)
     )
   }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    
+
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -80,7 +80,7 @@ const App = () => {
   const addLike = async (id) => {
     const blog = blogs.find(b => b.id === id)
     const changedBlog = { ...blog, likes: blog.likes + 1, user: blog.user.id }
-    
+
     try {
       const returnedBlog = await blogService.update(id, changedBlog)
       setBlogs(blogs.map(blog => (blog.id === id ? returnedBlog : blog)).sort((a, b) => b.likes - a.likes))
@@ -108,21 +108,21 @@ const App = () => {
     <form onSubmit={handleLogin}>
       <div>
         username
-          <input
+        <input
           type='text'
           value={username}
           name='Username'
-          onChange={({target}) => setUsername(target.value)}
-          />
+          onChange={({ target }) => setUsername(target.value)}
+        />
       </div>
       <div>
         password
-          <input
+        <input
           type='password'
           value={password}
           name='password'
-          onChange={({target}) => setPassword(target.value)}
-          />
+          onChange={({ target }) => setPassword(target.value)}
+        />
       </div>
       <button type='submit'>login</button>
     </form>
@@ -132,7 +132,7 @@ const App = () => {
     const sortedBlogs = [...unsortBlogs].sort((a, b) => b.likes - a.likes)
     setBlogs(sortedBlogs)
   }
- 
+
   const showBlogs = () => (
     <div>
       <h2>blogs</h2>
@@ -148,7 +148,7 @@ const App = () => {
       )}
     </div>
   )
-  
+
   const blogFormRef = useRef()
 
   const createBlogForm = () => (

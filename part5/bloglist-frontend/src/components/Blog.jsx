@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const Blog = ({ blog, addLike, deleteBlog }) => {
   const [view, setView] = useState(false)
@@ -29,22 +29,22 @@ const Blog = ({ blog, addLike, deleteBlog }) => {
           {blog.title} {blog.author}
           <button onClick={toggleView}>hide</button>
         </div>
-          <div>
-            {blog.url}
-          </div>
-          <div>
-            {blog.likes} 
-            <button onClick={addLike}>like</button>
-          </div>
-          <div>
-            {blog.user.name}
-          </div>
-          <div>
-            <button onClick={deleteBlog}>remove</button>
-          </div>
+        <div>
+          {blog.url}
+        </div>
+        <div>
+          {blog.likes}
+          <button onClick={addLike}>like</button>
+        </div>
+        <div>
+          {blog.user.name}
+        </div>
+        <div>
+          <button onClick={deleteBlog}>remove</button>
+        </div>
       </div>
-  </div>
-)}
+    </div>
+  )}
 
 
 export default Blog

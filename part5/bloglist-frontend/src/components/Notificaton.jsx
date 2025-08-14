@@ -1,26 +1,26 @@
-const Notification = ({notif}) => {
+const Notification = ({ notif }) => {
 
-    const { message, isError } = notif
+  const { message, isError } = notif
 
-    if (!message) {
-        return null
-    }
+  if (!message) {
+    return null
+  }
 
-    const style = {
-        color: isError ? 'red' : 'green',
-        background: 'lightgrey',
-        fontSize: 20,
-        borderStyle: 'solid',
-        borderRadius: 5,
-        padding: 10,
-        marginBottom: 10
-    }
+  const style = {
+    color: isError ? 'red' : 'green',
+    background: 'lightgrey',
+    fontSize: 20,
+    borderStyle: 'solid',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 10
+  }
 
-    return (
-        <div style={style}>
-            {message}
-        </div>
-    )
+  return (
+    <div style={style}>
+      {message}
+    </div>
+  )
 }
 
 export default Notification
