@@ -25,15 +25,20 @@ const Blog = ({ blog, addLike }) => {
         <button onClick={toggleView}>view</button>
       </div>
       <div style={showWhenVisible}>
+        <div>
           {blog.title} {blog.author}
           <button onClick={toggleView}>hide</button>
-        <br/>
-          {blog.url}
-        <br/>
-          {blog.likes} 
-          <button onClick={addLike}>like</button>
-        <br/>
-          {blog.user.name}
+        </div>
+          <div>
+            {blog.url}
+          </div>
+          <div>
+            {blog.likes} 
+            <button onClick={addLike}>like</button>
+          </div>
+          <div>
+            {blog.user.name}
+          </div>
       </div>
   </div>
 )}

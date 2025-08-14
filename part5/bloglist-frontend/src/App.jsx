@@ -77,18 +77,17 @@ const App = () => {
       })
   }
 
-  const addLike = (id) => {
+  const addLike = async (id) => {
     const blog = blogs.find(b => b.id === id)
-    const changedBlog = { ...blog, likes: blog.likes + 1 } 
+    const changedBlog = { ...blog, likes: blog.likes + 1 }
     
-    blogService
-      .update(id, changedBlog)
-      .then(returnedBlog => {
-        setBlogs(blogs.map(blog => (blog.id === id ? returnedBlog : blog)))
-      })
-      .catch(error => {
-        setBlogs(blogs.filter(b => b.id !== id))
-      })
+    try {
+      const returnedBlog = await blogService.update(id, changedBlog)
+      setBlogs(blogs.map(blog => (blog.id === id ? returnedBlog : blog)))
+    }
+    catch{error => {
+      setBlogs(blogs.filter(b => b.id !== id))
+    }}
   }
 
   const loginForm = () => (
