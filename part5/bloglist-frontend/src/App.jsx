@@ -90,6 +90,20 @@ const App = () => {
     }}
   }
 
+  const deleteBlog = async (id) => {
+    const blog = blogs.find(b => b.id === id)
+
+    try {
+      if (confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+        await blogService.remove(id)
+        setBlogs(blogs.filter(b => b.id !== id))
+      }
+    }
+    catch {error => {
+      setBlogs(blogs.filter(b => b.id !== id))
+    }}
+  }
+
   const loginForm = () => (
     <form onSubmit={handleLogin}>
       <div>
@@ -130,7 +144,7 @@ const App = () => {
       <br/>
       {createBlogForm()}
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} addLike={() => addLike(blog.id)} />
+        <Blog key={blog.id} blog={blog} addLike={() => addLike(blog.id)} deleteBlog={() => deleteBlog(blog.id)} />
       )}
     </div>
   )
