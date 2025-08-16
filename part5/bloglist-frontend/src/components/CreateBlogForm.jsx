@@ -29,6 +29,7 @@ const CreateBlogForm = ({ addBlog }) => {
             type='text'
             value={title}
             name='Title'
+            id='title-input'
             onChange={({ target }) => setTitle(target.value)}
           />
         </div>
@@ -38,6 +39,7 @@ const CreateBlogForm = ({ addBlog }) => {
             type='text'
             value={author}
             name='Author'
+            id='author-input'
             onChange={({ target }) => setAuthor(target.value)}
           />
         </div>
@@ -47,6 +49,7 @@ const CreateBlogForm = ({ addBlog }) => {
             type='text'
             value={url}
             name='URL'
+            id='url-input'
             onChange={({ target }) => setUrl(target.value)}
           />
         </div>
@@ -56,8 +59,8 @@ const CreateBlogForm = ({ addBlog }) => {
   )
 }
 
-CreateBlogForm.propTypes = {
-  addBlog: PropTypes.func.isRequired
-}
+// CreateBlogForm.propTypes = {
+//   addBlog: PropTypes.func.isRequired
+// }
 
 export default CreateBlogForm
