@@ -2,15 +2,15 @@ const { test, expect, beforeEach, describe } = require('@playwright/test')
 
 describe('Blog app', () => {
   beforeEach(async ({ page, request }) => {
-    await request.post('http://localhost:3001/api/testing/reset')
-    await request.post('http://localhost:3001/api/users', {
+    await request.post('/api/testing/reset')
+    await request.post('/api/users', {
         data: {
             name: 'Louie Loo',
             username: 'louloo',
             password: 'password'
         }
     })
-    await page.goto('http://localhost:5173')
+    await page.goto('')
   })
 
   test('Login form is shown', async ({ page }) => {
@@ -42,7 +42,7 @@ describe('Blog app', () => {
         await page.getByRole('button', { name: 'login' }).click()
     })
 
-    test.only('a new blog can be created', async ({ page }) => {
+    test('a new blog can be created', async ({ page }) => {
         await page.getByRole('button', { name: 'create blog' }).click()
         await page.getByTestId('title').fill('Blog Title')
         await page.getByTestId('author').fill('Author Art')
@@ -50,6 +50,22 @@ describe('Blog app', () => {
         await page.getByRole('button', { name: 'create' }).click()
 
         await expect(page.getByText('a new blog Blog Title by Author Art added')).toBeVisible()
+    })
+
+    describe('A blog created', () => {
+        beforeEach(async ({ page }) => {
+            await page.getByRole('button', { name: 'create blog' }).click()
+            await page.getByTestId('title').fill('Blog Title')
+            await page.getByTestId('author').fill('Author Art')
+            await page.getByTestId('url').fill('www.blog.com')
+            await page.getByRole('button', { name: 'create' }).click()
+        })
+        
+        test('a blog can be liked', async ({ page }) => {
+            await page.getByRole('button', { name: 'view' }).click()
+            await page.getByRole('button', { name: 'like' }).click()
+            await expect(page.getByText('1')).toBeVisible()
+        })
     })
   })
 })
