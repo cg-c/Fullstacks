@@ -66,6 +66,20 @@ describe('Blog app', () => {
             await page.getByRole('button', { name: 'like' }).click()
             await expect(page.getByText('1')).toBeVisible()
         })
+
+        test.only('blog created by user can be deleted', async ({ page }) => {
+            await page.getByRole('button', { name: 'view' }).click()
+            
+            page.once('dialog',  async (dialog) => { 
+                console.log(dialog.message())
+                await dialog.accept()
+            })
+            const deleteButton = page.getByRole('button', { name: 'remove' })
+            await deleteButton.click()
+            await deleteButton.waitFor({ state: 'detached' })
+
+            await expect(page.getByText('Blog Title Author Art')).not.toBeVisible()
+        })
     })
   })
 })
