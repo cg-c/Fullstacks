@@ -67,7 +67,7 @@ describe('Blog app', () => {
             await expect(page.getByText('1')).toBeVisible()
         })
 
-        test.only('blog created by user can be deleted', async ({ page }) => {
+        test('blog created by user can be deleted', async ({ page }) => {
             await page.getByRole('button', { name: 'view' }).click()
             
             page.once('dialog',  async (dialog) => { 
@@ -79,6 +79,37 @@ describe('Blog app', () => {
             await deleteButton.waitFor({ state: 'detached' })
 
             await expect(page.getByText('Blog Title Author Art')).not.toBeVisible()
+        })
+
+        describe('Another user logs in', () => {
+            beforeEach(async ({ page, request }) => {
+                await request.post('/api/users', {
+                    data: {
+                        name: 'Amy Aim',
+                        username: 'amai',
+                        password: 'amyaim'
+                    }
+                })
+
+                await page.getByRole('button', { name: 'log out' }).click()
+                await page.getByTestId('username').fill('amai')
+                await page.getByTestId('password').fill('amyaim')
+                await page.getByRole('button', { name: 'login' }).click()
+            })
+
+            test.only('blog created by another user cannot be deleted', async ({ page }) => {
+                await page.getByRole('button', { name: 'view' }).click()
+                
+                page.once('dialog',  async (dialog) => { 
+                    console.log(dialog.message())
+                    await dialog.accept()
+                })
+                const deleteButton = page.getByRole('button', { name: 'remove' })
+                await deleteButton.click()
+
+                await expect(deleteButton).toBeVisible()
+                await expect(page.getByText('Blog Title Author Arthide')).toBeVisible()
+            })
         })
     })
   })
