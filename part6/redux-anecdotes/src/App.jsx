@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { toggleVote, createAnecdote } from './reducers/anecdoteReducer'
 
 const App = () => {
-  const anecdotes = useSelector(state => state)
+  const anecdotes = useSelector(state => state).sort((a, b) => b .votes - a.votes)
   const dispatch = useDispatch()
 
   const vote = (id) => {
@@ -27,7 +27,7 @@ const App = () => {
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => dispatch(toggleVote(anecdote.id))}>vote</button>
+            <button onClick={() => vote(anecdote.id)}>vote</button>
           </div>
         </div>
       )}
