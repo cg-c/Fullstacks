@@ -11,18 +11,12 @@ const AnecdoteList = () => {
     })
 
     const vote = (anecdote) => {
-        dispatch(toggleVote(anecdote.id))
+        dispatch(toggleVote(anecdote))
         dispatch(changeNotif(`You voted '${anecdote.content}'`))
         setTimeout(() => {
             dispatch(clearNotif())
         }, 5000)
     }
-
-    // const filter = useSelector(state => state.filter)
-
-    // const filterAnecdotes = anecdotes.filter(a => {
-    //     return a.content.toLowerCase().includes(filter.toLowerCase())
-    // }).sort((a, b) => b.votes - a.votes)
 
     return (
         <div>
