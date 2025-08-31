@@ -13,15 +13,16 @@ const App = () => {
     mutationFn: updateAnecdote,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['anecdotes']})
+
+      dispatch({ type: 'SET_MESS', payload: `anecdote '${anecdote.content}' voted`})
+      setTimeout(() => {
+        dispatch({ type: 'CLEAR_MESS'})
+      }, 5000)
     }
   })
 
   const handleVote = (anecdote) => {
     updateAnecdoteMutation.mutate({...anecdote, votes: anecdote.votes + 1})
-    dispatch({ type: 'SET_MESS', payload: `anecdote '${anecdote.content}' voted`})
-    setTimeout(() => {
-      dispatch({ type: 'CLEAR_MESS'})
-    }, 5000)
   }
 
   const {data: anecdotes, isLoading, isError} = useQuery({

@@ -12,6 +12,17 @@ const AnecdoteForm = () => {
       // const anecdotes = queryClient.getQueriesData(['anecdotes'])
       // queryClient.setQueriesData(['anecdotes'], anecdotes.concat(newAnecdote))
       queryClient.invalidateQueries({ queryKey: ['anecdotes']})
+
+      dispatch({ type: 'SET_MESS', payload: `anecdote '${newAnecdote.content}' created`})
+      setTimeout(() => {
+        dispatch({ type: 'CLEAR_MESS'})
+      }, 5000)
+    },
+    onError: (error) => {
+      dispatch({ type: 'SET_MESS', payload: error.response.data.error})
+      setTimeout(() => {
+        dispatch({ type: 'CLEAR_MESS'})
+      }, 5000)
     }
   })
 
@@ -20,11 +31,6 @@ const AnecdoteForm = () => {
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
     newAnecdoteMutation.mutate({ content, votes: 0 })
-
-    dispatch({ type: 'SET_MESS', payload: `anecdote '${content}' created`})
-    setTimeout(() => {
-      dispatch({ type: 'CLEAR_MESS'})
-    }, 5000)
   }
 
 
