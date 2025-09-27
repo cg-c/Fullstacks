@@ -1,50 +1,48 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 const Blog = ({ blog, addLike, deleteBlog }) => {
-  const [view, setView] = useState(false)
+  const [view, setView] = useState(false);
 
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
-    border: 'solid',
+    border: "solid",
     borderWidth: 1,
-    marginBottom: 5
-  }
+    marginBottom: 5,
+  };
 
-  const hideWhenVisible = { display: view ? 'none' : '' }
-  const showWhenVisible = { display: view ? '' : 'none' }
+  const hideWhenVisible = { display: view ? "none" : "" };
+  const showWhenVisible = { display: view ? "" : "none" };
 
   const toggleView = () => {
-    setView(!view)
-  }
+    setView(!view);
+  };
 
   return (
     <div style={blogStyle}>
-      <div style={hideWhenVisible} className='hiddenBlog'>
+      <div style={hideWhenVisible} className="hiddenBlog">
         {blog.title} {blog.author}
         <button onClick={toggleView}>view</button>
       </div>
-      <div style={showWhenVisible} className='fullBlog'>
+      <div style={showWhenVisible} className="fullBlog">
         <div>
           {blog.title} {blog.author}
           <button onClick={toggleView}>hide</button>
         </div>
+        <div>{blog.url}</div>
         <div>
-          {blog.url}
+          <span className="likeCount">{blog.likes}</span>
+          <button onClick={addLike} className="likeButton">
+            like
+          </button>
         </div>
-        <div>
-          <span className='likeCount'>{blog.likes}</span>
-          <button onClick={addLike} className='likeButton'>like</button>
-        </div>
-        <div>
-          {blog.user.name}
-        </div>
+        <div>{blog.user.name}</div>
         <div>
           <button onClick={deleteBlog}>remove</button>
         </div>
       </div>
     </div>
-  )}
+  );
+};
 
-
-export default Blog
+export default Blog;
