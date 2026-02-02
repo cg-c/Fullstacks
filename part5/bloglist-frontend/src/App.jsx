@@ -5,6 +5,8 @@ import loginService from "./services/login";
 import Notification from "./components/Notificaton";
 import Togglable from "./components/Togglable";
 import CreateBlogForm from "./components/CreateBlogForm";
+import { setNotification } from "./components/reducers/notificationReducer";
+import { useDispatch } from "react-redux";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -12,6 +14,8 @@ const App = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [notif, setNotif] = useState({ message: null });
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     blogService.getAll().then((blogs) => sortBlogsByLikes(blogs));
@@ -27,11 +31,14 @@ const App = () => {
     }
   }, []);
 
+
+  // CHNAGE HERE W/ IMPORT
   const notifyWith = (message, isError = false) => {
-    setNotif({ message, isError });
-    setTimeout(() => {
-      setNotif({ message: null });
-    }, 5000);
+    // setNotif({ message, isError });
+    // setTimeout(() => {
+    //   setNotif({ message: null });
+    // }, 5000);
+    dispatch(setNotification(message, isError));
   };
 
   const handleLogin = async (event) => {
