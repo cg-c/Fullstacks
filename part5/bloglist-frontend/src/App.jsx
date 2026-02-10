@@ -6,14 +6,14 @@ import Notification from "./components/Notificaton";
 import Togglable from "./components/Togglable";
 import CreateBlogForm from "./components/CreateBlogForm";
 import { setNotification } from "./components/reducers/notificationReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const [notif, setNotif] = useState({ message: null });
+  // const [notif, setNotif] = useState({ message: null });
 
   const dispatch = useDispatch();
 
@@ -149,7 +149,7 @@ const App = () => {
   const showBlogs = () => (
     <div>
       <h2>blogs</h2>
-      <Notification notif={notif} />
+      <Notification />
       <div>
         {user.name} logged in
         <button onClick={handleLogOut}>log out</button>
@@ -182,7 +182,7 @@ const App = () => {
       {user === null ? (
         <div>
           <h2>log in to application</h2>
-          <Notification notif={notif} />
+          <Notification />
           {loginForm()}
         </div>
       ) : (

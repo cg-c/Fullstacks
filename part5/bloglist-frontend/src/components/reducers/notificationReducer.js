@@ -4,7 +4,7 @@ const notifSlice = createSlice({
     name: 'notification',
     initialState: {
         isError: false,
-        message: ''
+        message: ""
     },
     reducers: {
         changeNotif(state, action) {
@@ -12,7 +12,7 @@ const notifSlice = createSlice({
             state.message = action.payload.message
         },
         clearNotif(state, action) {
-            state.message = ''
+            state.message = ""
             state.isError = false
         }
     }
