@@ -32,7 +32,7 @@ const App = () => {
   }, []);
 
 
-  // CHNAGE HERE W/ IMPORT
+  // Changed to redux
   const notifyWith = (message, isError = false) => {
     // setNotif({ message, isError });
     // setTimeout(() => {
