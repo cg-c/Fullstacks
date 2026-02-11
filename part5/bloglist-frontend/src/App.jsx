@@ -6,19 +6,23 @@ import Notification from "./components/Notificaton";
 import Togglable from "./components/Togglable";
 import CreateBlogForm from "./components/CreateBlogForm";
 import { setNotification } from "./components/reducers/notificationReducer";
+import { initalizeBlogs, createBlog } from "./components/reducers/blogReducer";
 import { useDispatch, useSelector } from "react-redux";
+import blogs from "./services/blogs";
 
 const App = () => {
-  const [blogs, setBlogs] = useState([]);
+  // const [blogs, setBlogs] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   // const [notif, setNotif] = useState({ message: null });
 
   const dispatch = useDispatch();
+  const blogs = useSelector((state) => state.blogs)
 
   useEffect(() => {
-    blogService.getAll().then((blogs) => sortBlogsByLikes(blogs));
+    // blogService.getAll().then((blogs) => sortBlogsByLikes(blogs));
+    dispatch(initalizeBlogs())
   }, []);
 
   useEffect(() => {
@@ -67,12 +71,24 @@ const App = () => {
     setUser(null);
   };
 
+  // FIX HERE !!!!!!!!!!!
+  // !!!!!!!!!!!!!!!!!
   const addBlog = (blogObj) => {
     blogFormRef.current.toggleVisibility();
-    blogService
-      .create(blogObj)
+    // blogService
+    //   .create(blogObj)
+    //   .then((returnedBlog) => {
+    //     setBlogs(blogs.concat(returnedBlog));
+    //     notifyWith(
+    //       `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
+    //     );
+    //   })
+    //   .catch((error) => {
+    //     notifyWith(`fail to add blog: ${error}`);
+    //   });
+
+    dispatch(createBlog(blogObj))
       .then((returnedBlog) => {
-        setBlogs(blogs.concat(returnedBlog));
         notifyWith(
           `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
         );
