@@ -71,32 +71,31 @@ const App = () => {
     setUser(null);
   };
 
-  // FIX HERE !!!!!!!!!!!
-  // !!!!!!!!!!!!!!!!!
-  const addBlog = (blogObj) => {
-    blogFormRef.current.toggleVisibility();
-    // blogService
-    //   .create(blogObj)
-    //   .then((returnedBlog) => {
-    //     setBlogs(blogs.concat(returnedBlog));
-    //     notifyWith(
-    //       `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
-    //     );
-    //   })
-    //   .catch((error) => {
-    //     notifyWith(`fail to add blog: ${error}`);
-    //   });
+  // const addBlog = (blogObj) => {
+  //   blogFormRef.current.toggleVisibility();
+  //   blogService
+  //     .create(blogObj)
+  //     .then((returnedBlog) => {
+  //       setBlogs(blogs.concat(returnedBlog));
+  //       notifyWith(
+  //         `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
+  //       );
+  //     })
+  //     .catch((error) => {
+  //       notifyWith(`fail to add blog: ${error}`);
+  //     });
+  // };
 
-    dispatch(createBlog(blogObj))
-      .then((returnedBlog) => {
-        notifyWith(
-          `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
-        );
-      })
-      .catch((error) => {
-        notifyWith(`fail to add blog: ${error}`);
-      });
-  };
+  const formAndNotif = (returnedBlog) => {
+    blogFormRef.current.toggleVisibility();
+    notifyWith(
+      `a new blog ${returnedBlog.title} by ${returnedBlog.author} added`,
+    );
+  }
+
+  const errorCreate = (error) => {
+    notifyWith(`fail to add blog: ${error}`);
+  }
 
   const addLike = async (id) => {
     const blog = blogs.find((b) => b.id === id);
@@ -188,7 +187,7 @@ const App = () => {
   const createBlogForm = () => (
     <div>
       <Togglable buttonLabel="create blog" ref={blogFormRef}>
-        <CreateBlogForm addBlog={addBlog} />
+        <CreateBlogForm formAndNotif={formAndNotif} errorCreate={errorCreate} />
       </Togglable>
     </div>
   );

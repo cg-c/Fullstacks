@@ -30,7 +30,7 @@ export const initalizeBlogs = () => {
 export const createBlog = content => {
     return async dispatch => {
         const newBlog = await blogService.create(content)
-        dispatch(addBlog(newBlog))
+        return dispatch(addBlog(newBlog))
     }
 }
 

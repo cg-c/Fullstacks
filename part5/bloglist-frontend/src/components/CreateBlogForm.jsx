@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { createBlog } from "./reducers/blogReducer";
 import PropTypes from "prop-types";
 
-const CreateBlogForm = ({ addBlog }) => {
+const CreateBlogForm = (/*{ addBlog }*/ {formAndNotif, errorCreate}) => {
   const dispatch = useDispatch()
 
   // const [title, setTitle] = useState("");
@@ -26,6 +26,12 @@ const CreateBlogForm = ({ addBlog }) => {
       author: author, 
       url: url,
     }))
+      .then((returnedBlog) => {
+        formAndNotif(returnedBlog.payload)
+      })
+      .catch((error) => {
+        errorCreate(error)
+      });
 
     // addBlog({
     //   title: title,
