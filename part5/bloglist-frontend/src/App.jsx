@@ -6,7 +6,7 @@ import Notification from "./components/Notificaton";
 import Togglable from "./components/Togglable";
 import CreateBlogForm from "./components/CreateBlogForm";
 import { setNotification } from "./components/reducers/notificationReducer";
-import { initalizeBlogs, createBlog } from "./components/reducers/blogReducer";
+import { initalizeBlogs, createBlog, likeBlog, removeBlog } from "./components/reducers/blogReducer";
 import { useDispatch, useSelector } from "react-redux";
 import blogs from "./services/blogs";
 
@@ -99,35 +99,42 @@ const App = () => {
 
   const addLike = async (id) => {
     const blog = blogs.find((b) => b.id === id);
+    
     const changedBlog = { ...blog, likes: blog.likes + 1, user: blog.user.id };
-
-    try {
-      const returnedBlog = await blogService.update(id, changedBlog);
-      setBlogs(
-        blogs
-          .map((blog) => (blog.id === id ? returnedBlog : blog))
-          .sort((a, b) => b.likes - a.likes),
-      );
-    } catch {
-      (error) => {
-        setBlogs(blogs.filter((b) => b.id !== id));
-      };
-    }
+    dispatch(likeBlog(id, changedBlog))
+    // try {
+    //   const returnedBlog = await blogService.update(id, changedBlog);
+      
+    //   setBlogs(
+    //     blogs
+    //       .map((blog) => (blog.id === id ? returnedBlog : blog))
+    //       .sort((a, b) => b.likes - a.likes),
+    //   );
+    // } catch {
+    //   (error) => {
+    //     setBlogs(blogs.filter((b) => b.id !== id));
+    //   };
+    // }
   };
 
+  // CHANGE HERE !!!!!!!!!!!!!!!!!!!!!!!
   const deleteBlog = async (id) => {
     const blog = blogs.find((b) => b.id === id);
 
-    try {
-      if (confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
-        await blogService.remove(id);
-        setBlogs(blogs.filter((b) => b.id !== id));
-      }
-    } catch {
-      (error) => {
-        setBlogs(blogs.filter((b) => b.id !== id));
-      };
+    if (confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+      dispatch(removeBlog(id))
     }
+
+    // try {
+    //   if (confirm(`Remove blog ${blog.title} by ${blog.author}`)) {
+    //     await blogService.remove(id);
+    //     setBlogs(blogs.filter((b) => b.id !== id));
+    //   }
+    // } catch {
+    //   (error) => {
+    //     setBlogs(blogs.filter((b) => b.id !== id));
+    //   };
+    // }
   };
 
   const loginForm = () => (
