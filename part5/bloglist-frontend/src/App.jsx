@@ -48,8 +48,10 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    const username = event.target.username.value;
-    const password = event.target.password.value;
+    const username = event.target.Username.value;
+    const password = event.target.Password.value;
+    event.target.Username.value = '';
+    event.target.Password.value = '';
 
     dispatch(logUserIn({
       username,
@@ -62,8 +64,7 @@ const App = () => {
       notifyWith("Wrong username or password", true);
     })
 
-    event.target.userName.value = "";
-    event.target.password.value = "";
+    
 
     // try {
     //   const user = await loginService.login({
@@ -161,7 +162,8 @@ const App = () => {
         <input
           type="text"
           // value={username}
-          name="username"
+          name="Username"
+          id="username-input"
           data-testid="username"
           // onChange={({ target }) => setUsername(target.value)}
         />
@@ -171,7 +173,8 @@ const App = () => {
         <input
           type="password"
           // value={password}
-          name="password"
+          name="Password"
+          id="password-input"
           data-testid="password"
           // onChange={({ target }) => setPassword(target.value)}
         />
@@ -218,7 +221,7 @@ const App = () => {
 
   return (
     <div>
-      {user === null ? (
+      {user.token === null ? (
         <div>
           <h2>log in to application</h2>
           <Notification />
