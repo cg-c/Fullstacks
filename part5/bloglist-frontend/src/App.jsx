@@ -1,24 +1,23 @@
 import { useState, useEffect, useRef } from "react";
 import Blog from "./components/Blog";
-import blogService from "./services/blogs";
-import loginService from "./services/login";
 import Notification from "./components/Notificaton";
 import Togglable from "./components/Togglable";
 import CreateBlogForm from "./components/CreateBlogForm";
 import { setNotification } from "./components/reducers/notificationReducer";
-import { initalizeBlogs, createBlog, likeBlog, removeBlog } from "./components/reducers/blogReducer";
+import { initalizeBlogs, likeBlog, removeBlog } from "./components/reducers/blogReducer";
+import { logSavedUser, logUserIn, logUserOut } from "./components/reducers/loginReducer";
 import { useDispatch, useSelector } from "react-redux";
-import blogs from "./services/blogs";
 
 const App = () => {
   // const [blogs, setBlogs] = useState([]);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [user, setUser] = useState(null);
+  // const [username, setUsername] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [user, setUser] = useState(null);
   // const [notif, setNotif] = useState({ message: null });
 
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blogs)
+  const user = useSelector((state) => state.user)
 
   useEffect(() => {
     // blogService.getAll().then((blogs) => sortBlogsByLikes(blogs));
@@ -29,9 +28,10 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
 
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON);
-      setUser(user);
-      blogService.setToken(user.token);
+      const savedUser = JSON.parse(loggedUserJSON);
+      dispatch(logSavedUser(savedUser));
+      // setUser(user);
+      // blogService.setToken(user.token);
     }
   }, []);
 
@@ -48,27 +48,44 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
 
-    try {
-      const user = await loginService.login({
-        username,
-        password,
-      });
+    const username = event.target.username.value;
+    const password = event.target.password.value;
 
-      window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
-
-      blogService.setToken(user.token);
-      setUser(user);
-      setUsername("");
-      setPassword("");
-    } catch {
+    dispatch(logUserIn({
+      username,
+      password,
+    }))
+    .then((person) => {
+      window.localStorage.setItem("loggedBlogappUser", JSON.stringify(person));
+    })
+    .catch((error) => {
       notifyWith("Wrong username or password", true);
-    }
+    })
+
+    event.target.userName.value = "";
+    event.target.password.value = "";
+
+    // try {
+    //   const user = await loginService.login({
+    //     username,
+    //     password,
+    //   });
+
+    //   window.localStorage.setItem("loggedBlogappUser", JSON.stringify(user));
+
+    //   blogService.setToken(user.token);
+    //   setUser(user);
+    //   setUsername("");
+    //   setPassword("");
+    // } catch {
+    //   notifyWith("Wrong username or password", true);
+    // }
   };
 
   const handleLogOut = (event) => {
     event.preventDefault();
     window.localStorage.removeItem("loggedBlogappUser");
-    setUser(null);
+    dispatch(logUserOut());
   };
 
   // const addBlog = (blogObj) => {
@@ -143,20 +160,20 @@ const App = () => {
         username
         <input
           type="text"
-          value={username}
-          name="Username"
+          // value={username}
+          name="username"
           data-testid="username"
-          onChange={({ target }) => setUsername(target.value)}
+          // onChange={({ target }) => setUsername(target.value)}
         />
       </div>
       <div>
         password
         <input
           type="password"
-          value={password}
+          // value={password}
           name="password"
           data-testid="password"
-          onChange={({ target }) => setPassword(target.value)}
+          // onChange={({ target }) => setPassword(target.value)}
         />
       </div>
       <button type="submit">login</button>
