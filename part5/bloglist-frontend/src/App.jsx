@@ -36,7 +36,6 @@ const App = () => {
   }, []);
 
 
-  // Changed to redux
   const notifyWith = (message, isError = false) => {
     // setNotif({ message, isError });
     // setTimeout(() => {
@@ -63,8 +62,6 @@ const App = () => {
     .catch((error) => {
       notifyWith("Wrong username or password", true);
     })
-
-    
 
     // try {
     //   const user = await loginService.login({
@@ -135,7 +132,6 @@ const App = () => {
     // }
   };
 
-  // CHANGE HERE !!!!!!!!!!!!!!!!!!!!!!!
   const deleteBlog = async (id) => {
     const blog = blogs.find((b) => b.id === id);
 

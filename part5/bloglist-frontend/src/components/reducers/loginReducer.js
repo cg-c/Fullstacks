@@ -41,7 +41,8 @@ export const logUserIn = (credentials) => {
 
 export const logSavedUser = (user) => {
     return async dispatch => {
-        return dispatch(setUser(user))       
+        blogService.setToken(user.token)
+        return dispatch(setUser(user.payload))   
     }
 }
 
