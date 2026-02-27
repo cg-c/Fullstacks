@@ -7,6 +7,11 @@ import { setNotification } from "./components/reducers/notificationReducer";
 import { initalizeBlogs, likeBlog, removeBlog } from "./components/reducers/blogReducer";
 import { logSavedUser, logUserIn, logUserOut } from "./components/reducers/loginReducer";
 import { useDispatch, useSelector } from "react-redux";
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link
+} from 'react-router-dom'
+import UserView from "./components/UsersView";
 
 const App = () => {
   // const [blogs, setBlogs] = useState([]);
@@ -184,15 +189,21 @@ const App = () => {
     setBlogs(sortedBlogs);
   };
 
-  const showBlogs = () => (
+  const header = () => (
     <div>
       <h2>blogs</h2>
       <Notification />
       <div>
         {user.name} logged in
+        <br />
         <button onClick={handleLogOut}>log out</button>
       </div>
       <br />
+    </div>
+  );
+
+  const showBlogs = () => (
+    <div>
       {createBlogForm()}
       {blogs.map((blog) => (
         <Blog
@@ -215,7 +226,7 @@ const App = () => {
     </div>
   );
 
-  return (
+  const home = () => (
     <div>
       {user.token === null ? (
         <div>
@@ -224,9 +235,30 @@ const App = () => {
           {loginForm()}
         </div>
       ) : (
-        showBlogs()
+        <div>
+          {showBlogs()}
+        </div>
       )}
     </div>
+  );
+
+  return (
+    <Router>
+      <div>
+        {user.token !== null ? (
+          <div>
+            {header()}
+          </div>
+        ) : (<div />)}
+      </div>
+
+      <Routes>
+        <Route path="/" element={home()}  />
+        <Route path="/users" element={<UserView blogs={blogs} />} />
+      </Routes>
+      
+    </Router>
+    
   );
 };
 
