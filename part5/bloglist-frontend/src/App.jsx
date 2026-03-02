@@ -12,6 +12,7 @@ import {
   Routes, Route, Link
 } from 'react-router-dom'
 import UserView from "./components/UsersView";
+import UserBlogs from "./components/UserBlogs";
 
 const App = () => {
   // const [blogs, setBlogs] = useState([]);
@@ -255,6 +256,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={home()}  />
         <Route path="/users" element={<UserView blogs={blogs} />} />
+        <Route path="/users/:id" element={<UserBlogs />} />
       </Routes>
       
     </Router>

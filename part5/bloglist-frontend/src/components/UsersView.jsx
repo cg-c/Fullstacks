@@ -1,28 +1,47 @@
+import { useParams } from "react-router-dom"
+import { Link } from "react-router-dom"
 
-const Display = ({ name, count }) =>{
+const Display = ({ name, count, id }) =>{
     return(
         <tr>
-            <td>{name}</td>
+            <td><Link to={`/users/${id}`}>{name}</Link></td>
             <td>{count}</td>
         </tr>
     )
 }
 
 const UserView = ({ blogs }) => {
-    const authors = blogs.map(blog => blog.author)
     const nameBlogs = {}
+    const nameId = blogs.map(blog =>
+    ({
+        author: blog.author,
+        id: blog.id
+    })
+    )
 
-    for (const a of authors) {
-        if (nameBlogs[a]) {
-            nameBlogs[a]++
+    for (const n of nameId) {
+        if (nameBlogs[n.author]) {
+            nameBlogs[n.author]++
         }
         else {
-            nameBlogs[a] = 1
+            nameBlogs[n.author] = 1
         }
     }
 
-    const sorted = Object.entries(nameBlogs)
-    sorted.sort((a, b) => b[1] - a[1])
+    const seen = new Set()
+
+    const filter = nameId.filter(n => {
+        const dupe = seen.has(n.author)
+        seen.add(n.author)
+        return !dupe
+    })
+
+    const merge = filter.map(f => ({
+        ...f,
+        count: nameBlogs[f.author]
+    }))
+
+    merge.sort((a, b) => b.count - a.count)
 
     return (
         <div>
@@ -33,8 +52,8 @@ const UserView = ({ blogs }) => {
                         <th></th>
                         <th>blogs created</th>
                     </tr>
-                    {sorted.map(([key, value]) => (
-                        <Display name={key} count={value} />
+                    {merge.map(m => (
+                        <Display name={m.author} count={m.count} id={m.id} />
                     ))}
                 </tbody>
             </table>
