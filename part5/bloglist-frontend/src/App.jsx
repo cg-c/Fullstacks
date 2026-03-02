@@ -191,19 +191,6 @@ const App = () => {
     setBlogs(sortedBlogs);
   };
 
-  const header = () => (
-    <div>
-      <h2>blogs</h2>
-      <Notification />
-      <div>
-        {user.name} logged in
-        <br />
-        <button onClick={handleLogOut}>log out</button>
-      </div>
-      <br />
-    </div>
-  );
-
   const showBlogs = () => (
     <div>
       {createBlogForm()}
@@ -244,12 +231,35 @@ const App = () => {
     </div>
   );
 
+  const padding = {
+    padding: 3
+  }
+
+
+  const navBar = () => (
+    <div>
+      <div style={{backgroundColor: "LightGray", padding: 5}}>
+        <Link style={padding} to="/">blogs</Link>
+        <Link style={padding} to="/users">users</Link>
+        <span>
+          {user.name} logged in
+          <button onClick={handleLogOut}>log out</button>
+        </span>
+      </div>
+      
+      <div>
+        <h2>blog app</h2>
+        <Notification />
+      </div>
+    </div>
+  )
+
   return (
     <Router>
       <div>
         {user.token !== null ? (
           <div>
-            {header()}
+            {navBar()}
           </div>
         ) : (<div />)}
       </div>
