@@ -13,6 +13,7 @@ import {
 } from 'react-router-dom'
 import UserView from "./components/UsersView";
 import UserBlogs from "./components/UserBlogs";
+import BlogView from "./components/BlogView";
 
 const App = () => {
   // const [blogs, setBlogs] = useState([]);
@@ -210,8 +211,8 @@ const App = () => {
         <Blog
           key={blog.id}
           blog={blog}
-          addLike={() => addLike(blog.id)}
-          deleteBlog={() => deleteBlog(blog.id)}
+          // addLike={() => addLike(blog.id)}
+          // deleteBlog={() => deleteBlog(blog.id)}
         />
       ))}
     </div>
@@ -257,6 +258,7 @@ const App = () => {
         <Route path="/" element={home()}  />
         <Route path="/users" element={<UserView blogs={blogs} />} />
         <Route path="/users/:id" element={<UserBlogs blogs={blogs} />} />
+        <Route path="/blogs/:id" element={<BlogView blogs={blogs} addLike={addLike} />} />
       </Routes>
       
     </Router>

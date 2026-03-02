@@ -1,7 +1,8 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Blog = ({ blog, addLike, deleteBlog }) => {
-  const [view, setView] = useState(false);
+  // const [view, setView] = useState(false);
 
   const blogStyle = {
     paddingTop: 10,
@@ -11,16 +12,16 @@ const Blog = ({ blog, addLike, deleteBlog }) => {
     marginBottom: 5,
   };
 
-  const hideWhenVisible = { display: view ? "none" : "" };
-  const showWhenVisible = { display: view ? "" : "none" };
+  // const hideWhenVisible = { display: view ? "none" : "" };
+  // const showWhenVisible = { display: view ? "" : "none" };
 
-  const toggleView = () => {
-    setView(!view);
-  };
+  // const toggleView = () => {
+  //   setView(!view);
+  // };
 
   return (
     <div style={blogStyle}>
-      <div style={hideWhenVisible} className="hiddenBlog">
+      {/* <div style={hideWhenVisible} className="hiddenBlog">
         {blog.title} {blog.author}
         <button onClick={toggleView}>view</button>
       </div>
@@ -40,7 +41,8 @@ const Blog = ({ blog, addLike, deleteBlog }) => {
         <div>
           <button onClick={deleteBlog}>remove</button>
         </div>
-      </div>
+      </div> */}
+      <Link to={`/blogs/${blog.id}`}>{blog.title} {blog.author}</Link>
     </div>
   );
 };
