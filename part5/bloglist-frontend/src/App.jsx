@@ -256,7 +256,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={home()}  />
         <Route path="/users" element={<UserView blogs={blogs} />} />
-        <Route path="/users/:id" element={<UserBlogs />} />
+        <Route path="/users/:id" element={<UserBlogs blogs={blogs} />} />
       </Routes>
       
     </Router>

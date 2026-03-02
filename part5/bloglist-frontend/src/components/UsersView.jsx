@@ -53,7 +53,7 @@ const UserView = ({ blogs }) => {
                         <th>blogs created</th>
                     </tr>
                     {merge.map(m => (
-                        <Display name={m.author} count={m.count} id={m.id} />
+                        <Display name={m.author} count={m.count} id={m.id} key={m.id} />
                     ))}
                 </tbody>
             </table>
