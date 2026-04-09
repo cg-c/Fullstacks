@@ -32,15 +32,15 @@ const blogSlice = createSlice({
             return state.filter(b => b.id !== id)
         },
         comment(state, action) {
-            const id = action.payload.id
-            const blogtoUpdate = state.find(b => b.id === id)
-            const updateBlog = {
-                ...blogtoUpdate,
-                comments: action.payload.comment
-            }
+            const {id, comment } = action.payload
 
             return state.map(blog =>
-                blog.id !== id ? blog : updateBlog
+                blog.id !== id 
+                    ? blog
+                    : {
+                        ...blog,
+                        comments: [...blog.comments, comment]
+                    }
             )
         }
     },

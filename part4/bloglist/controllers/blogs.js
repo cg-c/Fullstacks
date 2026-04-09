@@ -72,10 +72,10 @@ blogRouter.post('/:id/comments', async (request, response, next) => {
     const blog = await Blog.findById(id)
 
     if (!blog) {
-      return reponse.status(404).end()
+      return response.status(404).end()
     }
 
-    const updatedBlog = await Blog.findByIdAndUpdate(id, {comment}, {new: true})
+    const updatedBlog = await Blog.findByIdAndUpdate(id, { $push: {comments: comment}}, {new: true})
     response.json(updatedBlog)
   }
   catch (e) {

@@ -18,16 +18,15 @@ const BlogView = ({ blogs, addLike }) => {
                     like
                 </button>
             </div>
+            <span>added by {blog.author}</span>
             <div>
                 <h3>comments</h3>
-                {/* <ol>
+                <ul>
                     {blog.comments.map(c => (
-                        <li>{c}</li>
+                        <li key={c}>{c}</li>
                     ))}
-                </ol> */}
+                </ul>
             </div>
-            
-            <span>added by {blog.author}</span>
         </div>
     )
 }
