@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom"
+import Comments from "./Comments"
 
 const BlogView = ({ blogs, addLike }) => {
     const id = useParams().id
@@ -19,14 +20,7 @@ const BlogView = ({ blogs, addLike }) => {
                 </button>
             </div>
             <span>added by {blog.author}</span>
-            <div>
-                <h3>comments</h3>
-                <ul>
-                    {blog.comments.map(c => (
-                        <li key={c}>{c}</li>
-                    ))}
-                </ul>
-            </div>
+            <Comments blog={blog} />
         </div>
     )
 }
