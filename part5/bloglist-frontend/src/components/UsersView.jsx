@@ -1,12 +1,18 @@
 import { useParams } from "react-router-dom"
 import { Link } from "react-router-dom"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material"
+
 
 const Display = ({ name, count, id }) =>{
     return(
-        <tr>
-            <td><Link to={`/users/${id}`}>{name}</Link></td>
-            <td>{count}</td>
-        </tr>
+        <TableRow>
+            <TableCell>
+                <Link to={`/users/${id}`}>{name}</Link>
+            </TableCell>
+            <TableCell>
+                {count}
+            </TableCell>
+        </TableRow>
     )
 }
 
@@ -46,18 +52,21 @@ const UserView = ({ blogs }) => {
     return (
         <div>
             <h2>Users</h2>
-            <table>
-                <tbody>
-                    <tr>
-                        <th></th>
-                        <th>blogs created</th>
-                    </tr>
-                    {merge.map(m => (
-                        <Display name={m.author} count={m.count} id={m.id} key={m.id} />
-                    ))}
-                </tbody>
-            </table>
-            
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell>blogs created</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {merge.map(m => (
+                            <Display name={m.author} count={m.count} id={m.id} key={m.id} />
+                        ))}    
+                    </TableBody>
+                </Table>
+            </TableContainer>            
         </div>
     )
 }

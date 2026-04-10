@@ -11,6 +11,7 @@ import {
   BrowserRouter as Router,
   Routes, Route, Link
 } from 'react-router-dom'
+import { Container, Button, TextField, AppBar, Toolbar } from '@mui/material'
 import UserView from "./components/UsersView";
 import UserBlogs from "./components/UserBlogs";
 import BlogView from "./components/BlogView";
@@ -162,7 +163,7 @@ const App = () => {
     <form onSubmit={handleLogin}>
       <div>
         username
-        <input
+        <TextField
           type="text"
           // value={username}
           name="Username"
@@ -173,7 +174,7 @@ const App = () => {
       </div>
       <div>
         password
-        <input
+        <TextField
           type="password"
           // value={password}
           name="Password"
@@ -182,7 +183,7 @@ const App = () => {
           // onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit">login</button>
+      <Button type="submit" variant="contained" style={{ marginTop: 10 }}>login</Button>
     </form>
   );
 
@@ -232,20 +233,24 @@ const App = () => {
   );
 
   const padding = {
-    padding: 3
+    padding: 4
   }
+
+  const style = { '&:hover': { bgcolor: 'rgba(255,255,255,0.3)' } }
 
 
   const navBar = () => (
     <div>
-      <div style={{backgroundColor: "LightGray", padding: 5}}>
-        <Link style={padding} to="/">blogs</Link>
-        <Link style={padding} to="/users">users</Link>
-        <span>
-          {user.name} logged in
-          <button onClick={handleLogOut}>log out</button>
-        </span>
-      </div>
+      <AppBar position="static" style={{ padding: 5, color: "white"}}>
+        <Toolbar>
+          <Button color="inherit" component={Link} to="/" sx={style}>Blogs</Button>
+          <Button color="inherit" component={Link} to="/users" sx={style}>Users</Button>
+          <span>
+            {user.name} logged in
+            <Button onClick={handleLogOut} color="inherit" sx={style}>log out</Button>
+          </span>
+        </Toolbar>
+      </AppBar>
       
       <div>
         <h2>blog app</h2>
@@ -256,21 +261,22 @@ const App = () => {
 
   return (
     <Router>
-      <div>
-        {user.token !== null ? (
-          <div>
-            {navBar()}
-          </div>
-        ) : (<div />)}
-      </div>
+      <Container>
+        <div>
+          {user.token !== null ? (
+            <div>
+              {navBar()}
+            </div>
+          ) : (<div />)}
+        </div>
 
-      <Routes>
-        <Route path="/" element={home()}  />
-        <Route path="/users" element={<UserView blogs={blogs} />} />
-        <Route path="/users/:id" element={<UserBlogs blogs={blogs} />} />
-        <Route path="/blogs/:id" element={<BlogView blogs={blogs} addLike={addLike} />} />
-      </Routes>
-      
+        <Routes>
+          <Route path="/" element={home()}  />
+          <Route path="/users" element={<UserView blogs={blogs} />} />
+          <Route path="/users/:id" element={<UserBlogs blogs={blogs} />} />
+          <Route path="/blogs/:id" element={<BlogView blogs={blogs} addLike={addLike} />} />
+        </Routes>
+      </Container>
     </Router>
     
   );

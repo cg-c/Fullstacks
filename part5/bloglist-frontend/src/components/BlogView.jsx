@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom"
 import Comments from "./Comments"
+import { Button } from "@mui/material"
 
 const BlogView = ({ blogs, addLike }) => {
     const id = useParams().id
@@ -15,9 +16,10 @@ const BlogView = ({ blogs, addLike }) => {
             <a href={blog.url}>{blog.url}</a>
             <div>
                 <span>{blog.likes} likes</span>
-                <button onClick={() => addLike(blog.id)} className="likeButton">
+                <Button onClick={() => addLike(blog.id)} className="likeButton"
+                    variant="contained" style={{ marginTop: 10 }} >
                     like
-                </button>
+                </Button>
             </div>
             <span>added by {blog.author}</span>
             <Comments blog={blog} />

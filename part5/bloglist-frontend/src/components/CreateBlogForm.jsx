@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createBlog } from "./reducers/blogReducer";
 import PropTypes from "prop-types";
+import { TextField, Button } from "@mui/material";
 
 const CreateBlogForm = (/*{ addBlog }*/ {formAndNotif, errorCreate}) => {
   const dispatch = useDispatch()
@@ -50,7 +51,7 @@ const CreateBlogForm = (/*{ addBlog }*/ {formAndNotif, errorCreate}) => {
       <form onSubmit={makeBlog}>
         <div>
           title:
-          <input
+          <TextField
             type="text"
             // value={title}
             name="Title"
@@ -61,7 +62,7 @@ const CreateBlogForm = (/*{ addBlog }*/ {formAndNotif, errorCreate}) => {
         </div>
         <div>
           author:
-          <input
+          <TextField
             type="text"
             // value={author}
             name="Author"
@@ -72,7 +73,7 @@ const CreateBlogForm = (/*{ addBlog }*/ {formAndNotif, errorCreate}) => {
         </div>
         <div>
           url:
-          <input
+          <TextField
             type="text"
             // value={url}
             name="URL"
@@ -81,7 +82,7 @@ const CreateBlogForm = (/*{ addBlog }*/ {formAndNotif, errorCreate}) => {
             // onChange={({ target }) => setUrl(target.value)}
           />
         </div>
-        <button>create</button>
+        <Button type="submit" variant="contained" style={{ marginTop: 10 }}>create</Button>
       </form>
     </div>
   );

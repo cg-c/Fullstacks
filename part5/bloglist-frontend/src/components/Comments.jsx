@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux"
 import { commentBlog } from "./reducers/blogReducer"
+import { Button, TextField } from "@mui/material"
 
 const Comments = ({ blog }) => {
     const dispatch = useDispatch()
@@ -18,12 +19,14 @@ const Comments = ({ blog }) => {
         <div>
             <h3>comments</h3>
             <form onSubmit={makeComment}>
-                <input
+                <TextField
                     type="text"
                     name="Comment"
                     id="comment-input"
+                    size="small"
+                    style={{ marginTop: 10 }}
                 />
-                <button>add comment</button>
+                <Button variant="contained" style={{ marginTop: 10 }}>add comment</Button>
             </form>
             
             <div>
