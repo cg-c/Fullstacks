@@ -124,6 +124,10 @@ const typeDefs = /* GraphQL */ `
       name: String!
       born: Int
     ): Author
+    editAuthor(
+      name: String!
+      setBornTo: Int
+    ): Author
   }
 `
 
@@ -164,6 +168,16 @@ const resolvers = {
       const author = { ...args, id: uuid() }
       authors = authors.concat(author)
       return author
+    },
+    editAuthor: (root, args) => {
+      const author = authors.find(a => a.name === args.name)
+      if (!author) {
+        return null
+      }
+
+      const updateAuthor = { ...author, born: args.setBornTo }
+      authors = authors.map(a => a.name === args.name ? updateAuthor : a)
+      return updateAuthor
     }
   }
 //   Book: {
