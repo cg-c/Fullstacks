@@ -1,5 +1,8 @@
-const Authors = ({ authors }) => {
-  if (authors.loading) {
+const Authors = ({ authors, show }) => {
+  if (!show) {
+    return null
+  }
+  else if (authors.loading) {
     return <div>loading...</div>
   }
 

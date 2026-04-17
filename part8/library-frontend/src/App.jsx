@@ -9,6 +9,7 @@ import NewBook from './components/NewBook'
 const App = () => {
   const [page, setPage] = useState('authors')
   const authorResult = useQuery(ALL_AUTHORS)
+  const bookResult = useQuery(ALL_BOOKS)
 
   return (
     <div>
@@ -18,9 +19,9 @@ const App = () => {
         <button onClick={() => setPage('add')}>add book</button>
       </div>
 
-      <Authors show={page === 'authors'} authors={authorResult} />
+      <Authors authors={authorResult} show={page === 'authors'} />
 
-      <Books show={page === 'books'} />
+      <Books books={bookResult} show={page === 'books'} />
 
       <NewBook show={page === 'add'} />
     </div>
